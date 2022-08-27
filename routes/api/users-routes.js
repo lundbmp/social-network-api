@@ -12,10 +12,7 @@ function testRoute(req, res) {
 }
 
 // /api/users/
-router.route("/").get(testRoute).post(testRoute);
-
-// /api/users/:id
-router.route("/:id").get(testRoute).delete(testRoute);
+router.route("/").get(testRoute).get(testRoute).post(testRoute).delete(testRoute);
 
 // /api/users/:userId/friends/:friendId
 router.route("/:userId/friends/:friendId").post(testRoute).delete(testRoute);
