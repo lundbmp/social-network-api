@@ -1,4 +1,5 @@
 const { Thought, User } = require("../models");
+const { findOneAndUpdate } = require("../models/User");
 
 const thoughtController = {
   // get all thoughts
@@ -63,9 +64,33 @@ const thoughtController = {
     }
   },
   // create reaction (added to thought array)
-  async addReaction(req, res) {},
+  async addReaction({ params, body }, res) {
+    try {
+      const dbThoughtData = await Thought.findOneAndUpdate(
+        { _id: params.thoughtId },
+        { $push: { reactions: body } },
+        { new: true }
+      );
+
+      res.status(200).json(dbThoughtData);
+    } catch (error) {
+      res.status(404).json({ message: "error at addReaction: " + error });
+    }
+  },
   // delete reaction (remove from thought array)
-  async deleteReaction(req, res) {},
+  async deleteReaction({ params }, res) {
+    try {
+      const dbThoughtData = await Thought.findOneAndUpdate(
+        { _id: params.thoughtId },
+        { $pull: { reactions: { reactionId: params.reactionId } } },
+        { new: true }
+      );
+
+      res.status(200).json(dbThoughtData);
+    } catch (error) {
+      res.status(404).json({ message: "error at deleteReaction: " + error });
+    }
+  },
 };
 
 module.exports = thoughtController;
