@@ -1,17 +1,28 @@
 const router = require("express").Router();
-
-function testRoute(req, res) {
-    if(req.params.thoughtId) {
-        res.status(200).json({ message: `route works ${req.params.thoughtId}` });
-        return;
-    }
-  res.status(200).json({ message: "route works" });
-}
+const {
+  getAllThoughts,
+  getSingleThougth,
+  addNewThought,
+  updateThought,
+  deleteThought,
+  addReaction,
+  deleteReaction,
+} = require("../../controllers/thought-controller");
 
 // /api/thoughts/
-router.route("/").get(testRoute).get(testRoute).post(testRoute).put(testRoute).delete(testRoute);
+router.route("/").get(getAllThoughts).post(addNewThought);
+
+// /api/thoughts/:id
+router
+  .route("/:id")
+  .get(getSingleThougth)
+  .put(updateThought)
+  .delete(deleteThought);
 
 // /api/thoughts/:thoughtId/reations/
-router.route("/:thoughtId/reactions/").post(testRoute).delete(testRoute);
+router.route("/:thoughtId/reactions/").post(addReaction);
+
+// /api/thoughts/:thoughtId/reations/:reactionId
+router.route("/:thoughtId/reactions/:reactionId").delete(deleteReaction);
 
 module.exports = router;
