@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const { ThoughtSchema } = require("./Thought");
 
 // email validator
 const validateEmail = (email) => {
@@ -24,7 +23,7 @@ const UserSchema = new Schema({
       "Please enter a valid email address...",
     ],
   },
-  thoughts: [ThoughtSchema],
+  thoughts: [{ type: Schema.Types.ObjectId, ref: "Thought" }],
   friends: [
     {
       type: Schema.Types.ObjectId,
