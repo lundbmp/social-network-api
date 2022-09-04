@@ -29,7 +29,7 @@ const thoughtController = {
         { $push: { thoughts: dbThoughtData["_id"] } },
         { new: true }
       );
-      res.status(200).json(dbUserData);
+      res.status(200).json(dbThoughtData);
     } catch (error) {
       res.status(500).json({ message: "error at addNewThought: " + error });
     }
